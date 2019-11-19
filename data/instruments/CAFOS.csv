@@ -1,0 +1,7 @@
+param, value
+Aeff, 3
+gain, 2.6
+pixel_size, 0.2
+saturation, 65535
+quantum_efficiency, 1
+

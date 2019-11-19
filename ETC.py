@@ -13,10 +13,10 @@ from matplotlib.widgets import TextBox
 from tkinter import *
 from tkinter.ttk import *
 
+
 def obs_select():
     print('a')
-    
-    
+
 
 root = Tk()
 root.title('Calculadora de tiempo de observación')
