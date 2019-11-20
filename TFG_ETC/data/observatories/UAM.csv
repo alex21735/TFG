@@ -1,0 +1,12 @@
+param, value
+
+observatory_name, Observatorio de la UAM (Madrid)
+observatory_latitude, 40.54
+
+observatory_longitude, -3.69
+observatory_altitude, 720
+
+
+observatory_rayleigh, 2.91
+observatory_aerosol, 6.51
+observatory_ozone, 0.27

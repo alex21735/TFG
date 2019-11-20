@@ -1,0 +1,11 @@
+param, value
+
+observatory_name, Observatorio de Calar Alto en verano (Almería)
+observatory_latitude, 37.22
+
+observatory_longitude, -2.55
+observatory_altitude, 2168
+observatory_rayleigh, 1.18
+observatory_aerosol, 4.52
+observatory_ozone, 0.19
+

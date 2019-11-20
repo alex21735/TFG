@@ -1,0 +1,10 @@
+param, value
+
+observatory_name, Observatorio de Paranal (Chile)
+observatory_latitude, -24.62
+observatory_longitude, -70.40
+observatory_altitude, 2635
+observatory_rayleigh, 1.5
+observatory_aerosol, 1.10
+observatory_ozone, 0.00
+

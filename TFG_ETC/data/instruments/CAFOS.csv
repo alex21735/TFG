@@ -1,0 +1,9 @@
+param, value
+
+instrument_name, CAFOS
+Aeff, 3
+
+gain, 2.3
+pixel_size, 0.53
+Nbias, 300
+Nsat, 50000
