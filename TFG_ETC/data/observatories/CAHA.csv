@@ -1,8 +1,6 @@
 param, value
-
-observatory_name, Observatorio de Calar Alto (Almería)
+observatory_name, Observatorio de Calar Alto (AlmerÃ­a)
 observatory_latitude, 37.22
-
 observatory_longitude, -2.55
 observatory_altitude, 2168
 observatory_rayleigh, 1.02

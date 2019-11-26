@@ -25,14 +25,14 @@ else:
 
 
 class Parameter(object):
-    
+
         def __init__(self):
             self.widget = None
-    
+
         def get_value(self):
             return None
-    
-    
+
+
 class Numeric_parameter(Parameter):
 
     def __init__(self, name, description,
@@ -143,16 +143,16 @@ class Input_block(object):
             current_row += 1
 
 
-def parameters_interface ():
-    
+def parameters_interface():
+
     block_list = []
-    
+
     # %% Observatory
-    
+
     observatory_dict = {}
     for filename in glob.glob('data/observatories/*csv'):
         observatory_dict[os.path.basename(filename)[:-4]] = filename
-    
+
     observatory = Input_block()
     observatory.add_parameter('observatory_name', String_parameter('Nombre', 'Nombre del observatorio', default='Observatorio'))
     observatory.add_parameter('observatory_latitude', Numeric_parameter('Latitud', 'Latitud en grados', min=-90, max=90,default=0))
@@ -161,24 +161,23 @@ def parameters_interface ():
     observatory.add_parameter('observatory_rayleigh', Numeric_parameter('Exitinción Rayleigh', 'coeficiente de dispersión para el observatorio', min=0,default=1))
     observatory.add_parameter('observatory_aerosol', Numeric_parameter('Extinción por aerosoles', 'coeficiente de dispersión por aerosoles para el observatorio', min=0,default=0))
     observatory.add_parameter('observatory_ozone', Numeric_parameter('Extinción por ozono', 'coeficiente de absorción del ozono para el observatorio', min=0,default=0))
-    
+
     block_list.append(observatory)
-    
-    
+
     # %% Instrument
-    
+
     instrument_dict = {}
     for filename in glob.glob('data/instruments/*csv'):
         instrument_dict[os.path.basename(filename)[:-4]] = filename
-    
+
     filter_dict = {}
     for filename in glob.glob('data/filters/*txt'):
         filter_dict[os.path.basename(filename)[:-4]] = filename
-        
+
     qe_dict = {}
     for filename in glob.glob('data/quantum_efficency/*txt'):
         qe_dict[os.path.basename(filename)[:-4]] = filename
-    
+
     instrument = Input_block()
     instrument.add_parameter('instrument_name', String_parameter('Nombre', 'Nombre del instrumento',default='CCD'))
     instrument.add_parameter('Aeff', Numeric_parameter('Area efectiva', 'Área efectiva, en m^2', min = 0,default=1))
@@ -192,16 +191,15 @@ def parameters_interface ():
     instrument.add_parameter('filter',
                              Option_parameter('Filtro', 'Filtro fotométrico',
                                               options=list(filter_dict.keys())))
-    
+
     block_list.append(instrument)
-    
-    
+
     # %% Source
-    
+
     spectral_template_dict = {}
     for filename in glob.glob('data/spectral_templates/*fits'):
         spectral_template_dict[os.path.basename(filename)[:-5]] = filename
-    
+
     source = Input_block()
     source.add_parameter('ra_object', Numeric_parameter('RA', 'Ascensión Recta en grados', min=0, max=360, default=0))
     source.add_parameter('dec_object', Numeric_parameter('DEC', 'Declinación en grados', min=-90, max=90, default=0))
@@ -209,28 +207,26 @@ def parameters_interface ():
     source.add_parameter('spectral_template',
                          Option_parameter('Espectro', 'Forma aproximada de la distribución espectral de energía',
                                           options=list(spectral_template_dict.keys())))
-    
+
     block_list.append(source)
-    
-    
+
     # %% Observing conditions
-    
+
     observing_conditions = Input_block()
     observing_conditions.add_parameter('day', String_parameter('Día de observación', ' en formato YYYY-MM-DD ',default='2020-01-01'))
     observing_conditions.add_parameter('hour', Numeric_parameter('Hora de observación', 'hora local', min=0, max=23, default=0))
     observing_conditions.add_parameter('utc', Numeric_parameter('Huso horario', ' en el lugar de observación', min=-14, max=14, default=0))
-    
+
     block_list.append(observing_conditions)
-    
-    
+
     # %% Create GUI window
-    
+
     root = tk.Tk()
     root.title('Calculadora de tiempo de observación')
     inputs = ttk.Notebook(root)
-    
+
     # Observatory
-    
+
     tab1 = ttk.Frame(inputs)
     inputs.add(tab1, text='Observatorio')
     observatory_selector = ttk.Combobox(tab1)
@@ -241,9 +237,9 @@ def parameters_interface ():
             lambda x: observatory.read_file(observatory_dict[
                     observatory_selector.get()]))
     observatory.create_tk_form(tab1, 1)
-    
+
     # Instrument
-    
+
     tab2 = ttk.Frame(inputs)
     inputs.add(tab2, text='Instrumento')
     instrument_selector = ttk.Combobox(tab2)
@@ -254,40 +250,38 @@ def parameters_interface ():
             lambda x: instrument.read_file(instrument_dict[
                     instrument_selector.get()]))
     instrument.create_tk_form(tab2, 1)
-    
+
     # Source
-    
+
     tab3 = ttk.Frame(inputs)
     inputs.add(tab3, text='Fuente')
     source.create_tk_form(tab3, 1)
-    
+
     # Observing conditions
-    
+
     tab4 = ttk.Frame(inputs)
     inputs.add(tab4, text='Observación')
     observing_conditions.create_tk_form(tab4, 1)
-    
+
     # Footer
-    
+
     inputs.pack()
     inputs.grid(row=0)
-    
-    
+
     parameters = {}
+
     def validate():  # TO DO: Validation ;^D
         for block in block_list:
             for param in block.params:
                 block.params[param].update()
                 parameters[param] = block.params[param].value
         root.destroy()
-    
-    
+
     tk.Button(root, text='OK', command=validate).grid(row=1)
     root.mainloop()
-    
-    
+
     # %% Return parameters dictionary
-    
+
     return parameters
 
 # -----------------------------------------------------------------------------
